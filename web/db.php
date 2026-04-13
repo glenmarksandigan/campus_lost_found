@@ -16,17 +16,22 @@ if (!@mysqli_real_connect($conn, $host, $username, $password, $dbname, $port, NU
 }
 
 // --- PDO Connection (Expected by check_schema.php and others) ---
+$pdo = null; // Initialize to avoid undefined variable errors
 try {
     $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
-        PDO::MYSQL_ATTR_SSL_CA => true, // Enable SSL for PDO
+        PDO::MYSQL_ATTR_SSL_CA => true,
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false, // More robust for cloud environments
     ];
     $pdo = new PDO($dsn, $username, $password, $options);
 } catch (\PDOException $e) {
-    // We don't die here just in case only mysqli is used, but it's good for debugging
+    // If PDO fails, we want to know why during setup
+    if (basename($_SERVER['PHP_SELF']) == 'db_setup.php') {
+        die("PDO Connection failed: " . $e->getMessage());
+    }
     error_log("PDO Connection failed: " . $e->getMessage());
 }
 ?>
