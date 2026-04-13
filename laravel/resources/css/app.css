@@ -1,0 +1,4 @@
+@import "./portal.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

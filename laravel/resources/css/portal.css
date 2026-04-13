@@ -1,0 +1,52 @@
+/* Sidebar Styles */
+.admin-sidebar {
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar-link {
+    transition: all 0.15s ease;
+}
+
+.sidebar-link.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 24px;
+    background: currentColor;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Navbar Styles */
+.navbar {
+    transition: all 0.35s ease;
+}
+
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #ffcc00, #f5c842);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 60%;
+}
+
+/* Global Adjustments */
+body {
+    padding-top: 0 !important; /* Managed by layout */
+}
