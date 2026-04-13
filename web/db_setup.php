@@ -76,6 +76,42 @@ $tables = [
         updated_at TIMESTAMP NULL,
         FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
         FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE
+    )",
+    "activity_logs" => "CREATE TABLE IF NOT EXISTS activity_logs (
+        id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        user_id BIGINT UNSIGNED NOT NULL,
+        action_type VARCHAR(255) NOT NULL,
+        target_type VARCHAR(255) NOT NULL,
+        target_id BIGINT UNSIGNED NOT NULL,
+        details TEXT NULL,
+        created_at TIMESTAMP NULL,
+        updated_at TIMESTAMP NULL,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )",
+    "admin_tasks" => "CREATE TABLE IF NOT EXISTS admin_tasks (
+        id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        assigned_to BIGINT UNSIGNED NOT NULL,
+        assigned_by BIGINT UNSIGNED NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        description TEXT NULL,
+        priority ENUM('low', 'normal', 'high', 'urgent') DEFAULT 'normal',
+        status ENUM('pending', 'in_progress', 'completed', 'cancelled') DEFAULT 'pending',
+        due_date DATE NULL,
+        completed_at TIMESTAMP NULL,
+        created_at TIMESTAMP NULL,
+        updated_at TIMESTAMP NULL,
+        FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE CASCADE,
+        FOREIGN KEY (assigned_by) REFERENCES users(id) ON DELETE CASCADE
+    )",
+    "lost_contacts" => "CREATE TABLE IF NOT EXISTS lost_contacts (
+        id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        report_id BIGINT UNSIGNED NOT NULL,
+        finder_name VARCHAR(255) NOT NULL,
+        finder_contact VARCHAR(50) NULL,
+        message TEXT NULL,
+        created_at TIMESTAMP NULL,
+        updated_at TIMESTAMP NULL,
+        FOREIGN KEY (report_id) REFERENCES lost_reports(id) ON DELETE CASCADE
     )"
 ];
 

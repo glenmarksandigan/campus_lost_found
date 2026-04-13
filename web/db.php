@@ -2,9 +2,9 @@
 // Database configuration - Use environment variables for security
 $host = getenv('DB_HOST') ?: 'mysql-2b818467-sandiganglenmark1-355b.e.aivencloud.com';
 $port = getenv('DB_PORT') ?: '24590';
-$dbname = getenv('DB_NAME') ?: 'defaultdb';
+$dbname = getenv('DB_NAME') ?: getenv('DB_DATABASE') ?: 'defaultdb';
 $username = getenv('DB_USER') ?: 'avnadmin';
-$password = getenv('DB_PASS') ?: '*********'; // Hidden, should be set in environment
+$password = getenv('DB_PASS') ?: getenv('DB_PASSWORD') ?: '*********';
 
 // --- MySQLi Connection (Used by many files) ---
 $conn = mysqli_init();
